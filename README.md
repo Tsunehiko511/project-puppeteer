@@ -27,7 +27,7 @@ AI構築型対戦ゲーム「マリオネットAI」の構築AIを開発する�
 まだ何を用意したらいいのかわかっていないです。  
 ・どういう形式にすれば，共有しやすくなるのか？
 
-気長に待つか，どんなコードが欲しいかリクエストしてください。  
+気長に待つか，どんなコードが欲しいかリクエストしてください 。  
 ぼちぼち準備しています。  
-https://github.com/Tsunehiko511/project-puppeteer/issues  
+https://github.com/Tsunehiko511/project-puppeteer/issues  
 （ゲーム公式コミュニティ https://marionetteslack.herokuapp.com ）
