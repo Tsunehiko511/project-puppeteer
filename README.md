@@ -1,4 +1,4 @@
-# project パペッティア  
+# Project パペッティア  
 AI構築型対戦ゲーム「マリオネットAI」の構築AIを開発するプロジエクト  
 （マリオネットAIを知らない人はこちらで調べてください。https://fromalgorithm.jimdo.com）
 
