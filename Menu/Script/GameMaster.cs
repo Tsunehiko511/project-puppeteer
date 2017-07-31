@@ -273,7 +273,7 @@ public class GameMaster : MonoBehaviour{
 		// 5回に1回は遅くする処理を加えている。ここを直すと高速化ができるかも。
 		if(play_mode == "GET_EVENT" && tmp_count%5 == 0){
 			Invoke("NextPhase", 0f); // こっちにするとスムーズに処理する。
-			NextPhase(); // こっちにするとちょっと動きが止まる（数秒後に表示される）
+			// NextPhase(); // こっちにするとちょっと動きが止まる（数秒後に表示される）
 		}
 		else{
 			NextPhase();
