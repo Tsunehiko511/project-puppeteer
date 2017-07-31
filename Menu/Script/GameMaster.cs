@@ -163,7 +163,7 @@ public class GameMaster : MonoBehaviour{
 
 	float start_time;
 	public string Play(Player _player1, Player _player2){
-		start_time = Time.time;
+		// start_time = Time.time;
 		Init(_player1, _player2);
 		MainPlay();
 
@@ -177,8 +177,19 @@ public class GameMaster : MonoBehaviour{
 	}
 
 	void Init(Player _player1, Player _player2){
+		_player1.color = "RED";
+		_player2.color = "BLUE";
 		this.player1 = _player1;
 		this.player2 = _player2;
+		/*
+		if(_player1.color == "RED"){
+			this.player1 = _player1;
+			this.player2 = _player2;
+		}
+		else{
+			this.player1 = _player2;
+			this.player2 = _player1;			
+		}*/
 		// 時間の生成
 		times = 200;
 		gameOver = false;
@@ -194,6 +205,7 @@ public class GameMaster : MonoBehaviour{
 		Enemy_Left_Count = 6;
 		My_KING_HP = 500;
 		Enemy_KING_HP = 500;
+		tmp_count = 0;
 
 		// ユニットの作成 & ボードに配置
 		units = new List<Unit_Cal>();
@@ -266,14 +278,15 @@ public class GameMaster : MonoBehaviour{
 			break;
 			case "GAME_OVER":
 			GameOverPhase();
+			Debug.Log("tmp_count:"+tmp_count);
 			return;
 		}
 		tmp_count++;
 		// TODO NextPlase()をすぐに呼ぶとUnityがフリーズしたりする。フレーム等の問題なのかな？
 		// 5回に1回は遅くする処理を加えている。ここを直すと高速化ができるかも。
 		if(play_mode == "GET_EVENT" && tmp_count%5 == 0){
-			Invoke("NextPhase", 0f); // こっちにするとスムーズに処理する。
-			// NextPhase(); // こっちにするとちょっと動きが止まる（数秒後に表示される）
+			//Invoke("NextPhase", 0f); // こっちにするとスムーズに処理する。
+			NextPhase(); // こっちにするとちょっと動きが止まる（数秒後に表示される）
 		}
 		else{
 			NextPhase();
@@ -494,8 +507,8 @@ public class GameMaster : MonoBehaviour{
 				loseTeam = "引き分け";
 			}
 		}
-		float end_time = Time.time - start_time;
-		Debug.Log(end_time);		
+		// float end_time = Time.time - start_time;
+		// Debug.Log(end_time);		
 		// Debug.Log("敵："+Enemys.name);
 		Debug.Log(times+":My_Left_Count:"+My_Left_Count+":"+My_KING_HP);
 		Debug.Log(times+":Enemy_Left_Count:"+Enemy_Left_Count+":"+Enemy_KING_HP);

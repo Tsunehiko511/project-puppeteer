@@ -10,18 +10,24 @@ public class Setting : MonoBehaviour {
 
 	void Start(){
 		// Game = new GameMaster();
-		player1 = new Player("RED");
-		player2 = new Player("BLUE");
+		player1 = new Player();
+		player2 = new Player();
 	}
+	float start_time;
 
 	// ボタンを押すとこの関数を実行する（対戦結果等はコンソールに表示される）
 	public void PushTestButton(){
 		// player1とplayer2にデータをセットする。SetData(セットするプレイヤ，ユニットの種類の配列，AIの配列);
 		SetData(player1, GetUnits("第7回(fred)"), GetCodes("第7回(fred)"));
 		SetData(player2, GetUnits("2ne"), GetCodes("2ne"));
-		for(int i=0; i<2;i++){
-			Game.Play(player1, player2);
-		}
+		Debug.LogFormat("Play {0}", 1);
+		Game.Play(player1, player2);
+		Debug.LogFormat("Play {0}", 2);
+		Game.Play(player2, player1);
+		// Invoke("Battle", 2f); // やや遅らして実行するとNextPhase内でInvokeを使用しても結果が上書きされることはなかった。
+	}
+	void Battle(){
+		Game.Play(player2, player1);
 	}
 
 	void SetData(Player _player, int[] _ids, string[] _json){
@@ -123,10 +129,6 @@ public class Player{
 	public string color = ""; 											// 赤？青？
 	public int[] Units = new int[4]{0,1,2,3};     	// 初期は[キング,クイーン,ナイト,ビショップ]
 	public Unit_Plans[] plans = new Unit_Plans[4];	// 4ユニット分のPlan(AI)が入る。
-
-	public Player(string _color){
-		this.color = _color;
-	}
 }
 // 時間計測
 // float start_time = Time.time;
