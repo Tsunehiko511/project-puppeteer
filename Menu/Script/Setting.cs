@@ -5,29 +5,25 @@ public class Setting : MonoBehaviour {
 	Player player1;
 	Player player2;
 	void Awake(){
-		Game = GameObject.Find("GameMaster").GetComponent<GameMaster>();
+		//Game = GameObject.Find("GameMaster").GetComponent<GameMaster>();
 	}
 
 	void Start(){
-		// Game = new GameMaster();
+		Game = new GameMaster();
 		player1 = new Player();
 		player2 = new Player();
 	}
-	float start_time;
 
 	// ボタンを押すとこの関数を実行する（対戦結果等はコンソールに表示される）
 	public void PushTestButton(){
 		// player1とplayer2にデータをセットする。SetData(セットするプレイヤ，ユニットの種類の配列，AIの配列);
 		SetData(player1, GetUnits("第7回(fred)"), GetCodes("第7回(fred)"));
 		SetData(player2, GetUnits("2ne"), GetCodes("2ne"));
-		Debug.LogFormat("Play {0}", 1);
-		Game.Play(player1, player2);
-		Debug.LogFormat("Play {0}", 2);
-		Game.Play(player2, player1);
-		// Invoke("Battle", 2f); // やや遅らして実行するとNextPhase内でInvokeを使用しても結果が上書きされることはなかった。
-	}
-	void Battle(){
-		Game.Play(player2, player1);
+		//Game関数は 4秒/200対戦 程度のスピード
+		for(int i=0; i<100; i++){
+			Debug.LogFormat("{0} の負け", Game.Play(player1, player2));
+			Debug.LogFormat("{0} の負け", Game.Play(player2, player1));
+		}
 	}
 
 	void SetData(Player _player, int[] _ids, string[] _json){

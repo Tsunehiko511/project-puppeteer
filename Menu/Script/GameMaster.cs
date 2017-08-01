@@ -1,11 +1,10 @@
-﻿using UnityEngine;
+﻿using UnityEngine; // Debug,Mathf,JsonUtilityに必要（代用できるならいらないかも）
 // using UnityEngine.UI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-// using UnityEngine.SceneManagement;
 
-public class GameMaster : MonoBehaviour{
+public class GameMaster{
 	public static int[] Die_Count = new int[8]{0,0,0,0,0,0,0,0};
 
 	public MapBoard_Cal board;
@@ -162,6 +161,7 @@ public class GameMaster : MonoBehaviour{
 	bool IsGameOver;
 
 	float start_time;
+
 	public string Play(Player _player1, Player _player2){
 		// start_time = Time.time;
 		Init(_player1, _player2);
@@ -278,11 +278,14 @@ public class GameMaster : MonoBehaviour{
 			break;
 			case "GAME_OVER":
 			GameOverPhase();
-			Debug.Log("tmp_count:"+tmp_count);
+			// Debug.Log("tmp_count:"+tmp_count);
 			return;
 		}
+		NextPhase();
+		/*
 		tmp_count++;
 		// TODO NextPlase()をすぐに呼ぶとUnityがフリーズしたりする。フレーム等の問題なのかな？
+		// => Debug.Logを入れなかったら通常処理の方が速かったのでInvokeはなし。
 		// 5回に1回は遅くする処理を加えている。ここを直すと高速化ができるかも。
 		if(play_mode == "GET_EVENT" && tmp_count%5 == 0){
 			//Invoke("NextPhase", 0f); // こっちにするとスムーズに処理する。
@@ -290,7 +293,7 @@ public class GameMaster : MonoBehaviour{
 		}
 		else{
 			NextPhase();
-		}
+		}*/
 	}
 
 
@@ -510,11 +513,10 @@ public class GameMaster : MonoBehaviour{
 		// float end_time = Time.time - start_time;
 		// Debug.Log(end_time);		
 		// Debug.Log("敵："+Enemys.name);
-		Debug.Log(times+":My_Left_Count:"+My_Left_Count+":"+My_KING_HP);
-		Debug.Log(times+":Enemy_Left_Count:"+Enemy_Left_Count+":"+Enemy_KING_HP);
+		// Debug.Log(times+":My_Left_Count:"+My_Left_Count+":"+My_KING_HP);
+		// Debug.Log(times+":Enemy_Left_Count:"+Enemy_Left_Count+":"+Enemy_KING_HP);
 		
 		// 加藤が負けようが終わり
-		//Invoke("HideCalPanel", 0.5f);
 		return;
 	}
 }
