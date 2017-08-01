@@ -11,7 +11,7 @@ AI構築型対戦ゲーム「マリオネットAI」の構築AIを開発する�
 ＊人がゲーム内で構築したAIと，パペッティア（自動生成AI）が構築したAIとで大会を開く  
 
 ## 想定している公開資料
-・Unityのプロジェクトファイルhttps://drive.google.com/open?id=0Bxz8nS89dTyZaWs0ZXVBRU04NjA  
+・Unityのプロジェクトファイル(毎回私の最新版をアップしています)https://drive.google.com/open?id=0Bxz8nS89dTyZaWs0ZXVBRU04NjA  
 ・対戦コード  
 ・（行動や条件にあたる）コマンドの辞書コード
 
