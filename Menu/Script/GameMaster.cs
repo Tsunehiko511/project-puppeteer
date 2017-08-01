@@ -18,7 +18,7 @@ public class GameMaster{
 	public static int My_KING_HP;
 	public static int Enemy_KING_HP;
 
-	public string loseTeam;
+	public string Winer;
 	bool gameOver;
 	Dictionarys dic = new Dictionarys();
 
@@ -27,6 +27,22 @@ public class GameMaster{
 	Player player2;
 	public GameMaster(){
 		NodeArrow.Init();
+	}
+
+	public int GetResult(string _string){
+		switch(_string){
+			case "RED_LEFT":
+			return My_Left_Count;
+			case "BLUE_LEFT":
+			return Enemy_Left_Count;
+			case "RED_KING_HP":
+			return My_KING_HP;
+			case "BLUE_KING_HP":
+			return Enemy_KING_HP;
+			case "TIME":
+			return times;
+		}
+		return -1;
 	}
 
 	void SpawnUnit(int _id, Player _player){
@@ -166,14 +182,7 @@ public class GameMaster{
 		// start_time = Time.time;
 		Init(_player1, _player2);
 		MainPlay();
-
-		if(loseTeam == "My"){
-			return "PLAYER1";
-		}
-		else if(loseTeam == "Enemy"){
-			return "PLAYER2";
-		}
-		return loseTeam;
+		return Winer;
 	}
 
 	void Init(Player _player1, Player _player2){
@@ -193,7 +202,7 @@ public class GameMaster{
 		// 時間の生成
 		times = 200;
 		gameOver = false;
-		loseTeam = "";
+		Winer = "";
 		DethSlot = new int[8];
 		Die_Count = new int[8]{0,0,0,0,0,0,0,0};
 
@@ -472,42 +481,42 @@ public class GameMaster{
 	void GameOverPhase(){
 		if(times < 1){// 時間切れなら キングのHPを比較
 			if(My_KING_HP > Enemy_KING_HP){
-				loseTeam = "Enemy";
+				Winer = "RED";
 			}
 			else if(My_KING_HP < Enemy_KING_HP){
-				loseTeam = "My";
+				Winer =  "BLUE";
 			}
 			else if(My_Left_Count > Enemy_Left_Count){
-				loseTeam = "Enemy";
+				Winer = "RED";
 			}
 			else if(My_Left_Count < Enemy_Left_Count){
-				loseTeam = "My";
+				Winer = "BLUE";
 			}
 			else{
-				loseTeam = "時間切れ";
+				Winer = "Draw";
 			}
 		}
 		else{// 時間内ならユニット破壊かキングのHP
 			if(My_KING_HP < 1 && Enemy_KING_HP < 1){
-				loseTeam = "引き分け";
+				Winer = "Draw";
 			}
 			else if(My_KING_HP < 1){
-				loseTeam = "My";
+				Winer = "BLUE";
 			}
 			else if(Enemy_KING_HP < 1){
-				loseTeam = "Enemy";
+				Winer = "RED";
 			}
 			else if(My_Left_Count < 1 && Enemy_Left_Count  < 1 ){
-				loseTeam = "引き分け";
+				Winer = "Draw";
 			}
 			else if(My_Left_Count < 1){
-				loseTeam = "My";
+				Winer = "BLUE";
 			}
 			else if(Enemy_Left_Count < 1){
-				loseTeam = "Enemy";
+				Winer = "RED";
 			}
 			else{
-				loseTeam = "引き分け";
+				Winer = "Draw";
 			}
 		}
 		// float end_time = Time.time - start_time;

@@ -19,10 +19,10 @@ public class Setting : MonoBehaviour {
 		// player1とplayer2にデータをセットする。SetData(セットするプレイヤ，ユニットの種類の配列，AIの配列);
 		SetData(player1, GetUnits("第7回(fred)"), GetCodes("第7回(fred)"));
 		SetData(player2, GetUnits("2ne"), GetCodes("2ne"));
-		//Game関数は 4秒/200対戦 程度のスピード
-		for(int i=0; i<100; i++){
-			Debug.LogFormat("{0} の負け", Game.Play(player1, player2));
-			Debug.LogFormat("{0} の負け", Game.Play(player2, player1));
+		//Game.Play(赤, 青)：1回処理するのに0.02秒程度かかる
+		for(int i=0; i<1; i++){
+			Debug.LogFormat("結果：{0}  詳細(赤,青)：残機({1},{2})，キングHP({3}, {4})", Game.Play(player1, player2), Game.GetResult("RED_LEFT"), Game.GetResult("BLUE_LEFT"), Game.GetResult("RED_KING_HP"), Game.GetResult("BLUE_KING_HP"));
+			Debug.LogFormat("結果：{0}  詳細(赤,青)：残機({1},{2})，キングHP({3}, {4})", Game.Play(player2, player1), Game.GetResult("RED_LEFT"), Game.GetResult("BLUE_LEFT"), Game.GetResult("RED_KING_HP"), Game.GetResult("BLUE_KING_HP"));
 		}
 	}
 
