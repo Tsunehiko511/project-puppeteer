@@ -28,11 +28,11 @@ AI構築型対戦ゲーム「マリオネットAI」の構築AIを開発する�
 コードのルールとか知らないので，きになる方は作ってください。  
 人が読めればOKです。わからなかったら聞きます。
 
-## 最後に
-まだ何を用意したらいいのかわかっていないです。  
-・どういう形式にすれば，共有しやすくなるのか？
-
-気長に待つか，どんなコードが欲しいかリクエストしてください 。  
-ぼちぼち準備しています。  
-https://github.com/Tsunehiko511/project-puppeteer/issues  
-（ゲーム公式コミュニティ https://marionetteslack.herokuapp.com ）
+## その他
+まだ何を用意したらいいのか？どういう形式にすれば，共有しやすくなるのか？わかっていないです。<br>
+気長に待つか，どんなコードが欲しいかリクエストしてください 。<br>
+現状1試合0.02秒で対戦できる機能を提供しました。<br><br>
+・疑問質問問題点 https://github.com/Tsunehiko511/project-puppeteer/issues<br>
+・ゲーム公式コミュニティ https://marionetteslack.herokuapp.com<br>
+・公式サイト https://fromalgorithm.jimdo.com<br>
+・Valu https://valu.is/2ne3<br>
