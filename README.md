@@ -16,7 +16,7 @@ AI構築型対戦ゲーム「マリオネットAI」の構築AIを開発する�
 ・（行動や条件にあたる）コマンドの辞書コード<br>
 
 ## とりあえず動かすには
-・UnityPackage(https://drive.google.com/open?id=0Bxz8nS89dTyZaWs0ZXVBRU04NjA)をダウンロードし，Unityにインポート<br>
+・UnityPackage(https://drive.google.com/open?id=0Bxz8nS89dTyZaWs0ZXVBRU04NjA )をダウンロードし，Unityにインポート<br>
 ・Unity上で再生し，テストボタンを押すと対戦結果がコンソールに出る<br>
 
 ## 参加者に求めること
