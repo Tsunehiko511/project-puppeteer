@@ -18,7 +18,7 @@ public class GameMaster{
 	public static int My_KING_HP;
 	public static int Enemy_KING_HP;
 
-	public string Winer;
+	public string Winner;
 	bool gameOver;
 	Dictionarys dic = new Dictionarys();
 
@@ -182,7 +182,7 @@ public class GameMaster{
 		// start_time = Time.time;
 		Init(_player1, _player2);
 		MainPlay();
-		return Winer;
+		return Winner;
 	}
 
 	void Init(Player _player1, Player _player2){
@@ -202,7 +202,7 @@ public class GameMaster{
 		// 時間の生成
 		times = 200;
 		gameOver = false;
-		Winer = "";
+		Winner = "";
 		DethSlot = new int[8];
 		Die_Count = new int[8]{0,0,0,0,0,0,0,0};
 
@@ -481,42 +481,42 @@ public class GameMaster{
 	void GameOverPhase(){
 		if(times < 1){// 時間切れなら キングのHPを比較
 			if(My_KING_HP > Enemy_KING_HP){
-				Winer = "RED";
+				Winner = "RED";
 			}
 			else if(My_KING_HP < Enemy_KING_HP){
-				Winer =  "BLUE";
+				Winner =  "BLUE";
 			}
 			else if(My_Left_Count > Enemy_Left_Count){
-				Winer = "RED";
+				Winner = "RED";
 			}
 			else if(My_Left_Count < Enemy_Left_Count){
-				Winer = "BLUE";
+				Winner = "BLUE";
 			}
 			else{
-				Winer = "Draw";
+				Winner = "Draw";
 			}
 		}
 		else{// 時間内ならユニット破壊かキングのHP
 			if(My_KING_HP < 1 && Enemy_KING_HP < 1){
-				Winer = "Draw";
+				Winner = "Draw";
 			}
 			else if(My_KING_HP < 1){
-				Winer = "BLUE";
+				Winner = "BLUE";
 			}
 			else if(Enemy_KING_HP < 1){
-				Winer = "RED";
+				Winner = "RED";
 			}
 			else if(My_Left_Count < 1 && Enemy_Left_Count  < 1 ){
-				Winer = "Draw";
+				Winner = "Draw";
 			}
 			else if(My_Left_Count < 1){
-				Winer = "BLUE";
+				Winner = "BLUE";
 			}
 			else if(Enemy_Left_Count < 1){
-				Winer = "RED";
+				Winner = "RED";
 			}
 			else{
-				Winer = "Draw";
+				Winner = "Draw";
 			}
 		}
 		// float end_time = Time.time - start_time;
