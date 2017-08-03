@@ -1,4 +1,4 @@
-# Project パペッティア（略してプロパペ）<br>
+# Project パペッティア（略：プロパペ）<br>
 AI構築型対戦ゲーム「マリオネットAI」の構築AIを開発するプロジエクト<br>
 （マリオネットAIを知らない人はこちらで調べてください。https://fromalgorithm.jimdo.com）<br>
 
