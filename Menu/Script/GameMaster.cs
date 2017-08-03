@@ -1,9 +1,9 @@
 ﻿using UnityEngine; // Debug,Mathf,JsonUtilityに必要（代用できるならいらないかも）
-// using UnityEngine.UI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 
+// 対戦するところ Play()で対戦できる.
 public class GameMaster{
 	public static int[] Die_Count = new int[8]{0,0,0,0,0,0,0,0};
 
@@ -2768,7 +2768,7 @@ public class Transitions{
             return row0;
         }
     }
-    public void SetRow(int _num, int _column, int _value){
+    public void SetColumn(int _num, int _column, int _value){
         switch(_num){
             case 0:
             this.row0[_column] = _value;
@@ -2789,7 +2789,29 @@ public class Transitions{
             this.row0[_column] = _value;
             break;
         }
-    }   
+    }
+    public void SetRow(int _num, int[] _row){
+        switch(_num){
+            case 0:
+            this.row0 = _row;
+            break;
+            case 1:
+            this.row1 = _row;
+            break;
+            case 2:
+            this.row2 = _row;
+            break;
+            case 3:
+            this.row3 = _row;
+            break;
+            case 4:
+            this.row0 = _row;
+            break;
+            default:
+            this.row0 = _row;
+            break;
+        }
+    }
 }
 [Serializable]
 public class Elements{
@@ -2829,9 +2851,30 @@ public class Elements{
             return row0;
         }
     }
-
+    public void SetRow(int _num, int[] _row){
+        switch(_num){
+            case 0:
+            this.row0 = _row;
+            break;
+            case 1:
+            this.row1 = _row;
+            break;
+            case 2:
+            this.row2 = _row;
+            break;
+            case 3:
+            this.row3 = _row;
+            break;
+            case 4:
+            this.row0 = _row;
+            break;
+            default:
+            this.row0 = _row;
+            break;
+        }
+    }
     // （行，列，入れる値）
-    public void SetRow(int _num, int _column, int _value){
+    public void SetColumn(int _num, int _column, int _value){
         switch(_num){
             case 0:
             this.row0[_column] = _value;
