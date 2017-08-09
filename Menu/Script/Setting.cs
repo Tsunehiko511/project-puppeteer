@@ -19,7 +19,7 @@ public class Setting : MonoBehaviour {
 
   // ボタンを押すとこの関数を実行する
   public void PushTestButton() {
-    TestPlay("ROOT7");
+    TestPlay("TEST");
   }
 
   // 数々のテストプレイ
