@@ -7,11 +7,11 @@ using System.Collections.Generic;
 // キャラはキング・クイーン・ナイト・ビショップで固定
 public class GA_2NE_ORIGIN{
 	int generation = 0;
-	int generation_max 	 = 100; // こいつを小さくすると処理の時間が短くなるかも
-	Player[] children = new Player[5]{new Player(),new Player(),new Player(),new Player(),new Player()}; 	// 5つの個体（こいつらをふるいにかける）
+	int generation_max 	 = 10; // こいつを小さくすると処理の時間が短くなるかも
+	Player[] children = new Player[6]{new Player(),new Player(),new Player(),new Player(),new Player(),new Player()}; 	// 5つの個体（こいつらをふるいにかける）
 	Player[] parents = new Player[2]{new Player(),new Player()}; 		// 親個体
 	Player battle_player = new Player(); 														// こいつに勝てる個体を見つける
-	int[] evaluations = new int[5]{0,0,0,0,0}; 											// 5個体の評価
+	int[] evaluations = new int[6]{0,0,0,0,0,0}; 											// 5個体の評価
 	int number1_id;																									// 評価が最も良い個体の番号
 	int number2_id;																									// 評価が２番目に良い個体の番号
 	int before_number1_id; 																					// 前世代で最も良い個体の番号（閲覧用に作った）
@@ -31,31 +31,33 @@ public class GA_2NE_ORIGIN{
 		Initial_Setting();
 	}
 
-	public void Play(GameMaster _gamemaster){
+	public bool Play(GameMaster _gamemaster){
+		int old_generation = generation;
+		string result = "";
 		before_number1_id = number1_id;
-		int count_up = 0;
-		// 前世代と同じやつが一番なら処理し続ける
-		while(number1_id == before_number1_id){
+
+		while(generation < old_generation+generation_max){
 			Evaluation(_gamemaster);
 			Selection();
 			Crossover();
 			Mutation();
 			// 前の一番良かったやつと違うならコードを表示（前回よりいい成績のコードが閲覧できる）
 			if(number1_id != before_number1_id){
-				Debug.Log(generation+"世代");
-				Debug.LogFormat("勝者：{0}  詳細(赤,青)：残機({1},{2})，キングHP({3}, {4})", _gamemaster.Play(parents[0], battle_player), _gamemaster.GetResult("RED_LEFT"), _gamemaster.GetResult("BLUE_LEFT"), _gamemaster.GetResult("RED_KING_HP"), _gamemaster.GetResult("BLUE_KING_HP"));
+				result = _gamemaster.Play(parents[0], battle_player);
+				Debug.LogFormat("勝者：{0}  詳細(赤,青)：残機({1},{2})，キングHP({3}, {4})", result, _gamemaster.GetResult("RED_LEFT"), _gamemaster.GetResult("BLUE_LEFT"), _gamemaster.GetResult("RED_KING_HP"), _gamemaster.GetResult("BLUE_KING_HP"));
 				Debug.Log(parents[0].plans[0].SaveToString()+"\n"
 					+parents[0].plans[1].SaveToString()+"\n"
 					+parents[0].plans[2].SaveToString()+"\n"
 					+parents[0].plans[3].SaveToString());
 			}
-			count_up++;
 			generation++;
-			if(count_up > generation_max){ // フリーズするので一定数を超えると処理を終える
-				break;
-			}
 		}
-		Debug.Log("終了");
+		if(result == "RED"){
+			Debug.Log("終了："+generation+"世代");
+			return false;
+		}
+		Debug.Log("まだまだ："+generation+"世代");
+		return true;
 	}
 
 	// 初期設定
@@ -124,8 +126,11 @@ public class GA_2NE_ORIGIN{
 		parents[1].SetData(children[number2_id].Units, json2);
 	}
 
-	// 交叉
+	// 交叉（自信ない）
 	void Crossover(){
+		OnePointCrossover(parents[0], parents[1], children[2], children[3]);
+		OnePointCrossover(parents[0], parents[1], children[4], children[5]);
+
 		// Plan内設定を交叉する。
 		// 特に思いつかんのでそのまま子を作る
 		string[] json1 = new string[4]{"","","",""};
@@ -138,10 +143,31 @@ public class GA_2NE_ORIGIN{
 		}
 		children[0].SetData(parents[0].Units, json1);
 		children[1].SetData(parents[1].Units, json2);
-		children[2].SetData(parents[0].Units, json1);
-		children[3].SetData(parents[0].Units, json1);
-		children[4].SetData(parents[1].Units, json2);
 	}
+
+	// 一点交叉：とりあえず作ったけど，あっているかわからん
+	void OnePointCrossover(Player _parent1, Player _parent2, Player _child1, Player _child2){
+		// 全てのユニットに交叉を適用する
+		for(int unit_id=0; unit_id<_parent1.plans.Length; unit_id++){
+			// 親の初期Planを所得
+			Plan tmp_plan0 = _parent1.plans[unit_id].GetPlan(0);
+			Plan tmp_plan1 = _parent2.plans[unit_id].GetPlan(0);
+			// 交叉点を決める
+			int cross_point = cRandom.Next(5);
+			for(int i=0; i<5; i++){
+				// 交叉点まで親1の初期Planを入れる。交叉点以降は親2。
+				if(i<cross_point){
+					_child1.plans[unit_id].GetPlan(0).elements.SetRow(i, tmp_plan0.elements.GetRow(i));
+					_child2.plans[unit_id].GetPlan(0).elements.SetRow(i, tmp_plan1.elements.GetRow(i));
+				}
+				else{
+					_child1.plans[unit_id].GetPlan(0).elements.SetRow(i, tmp_plan1.elements.GetRow(i));
+					_child2.plans[unit_id].GetPlan(0).elements.SetRow(i, tmp_plan0.elements.GetRow(i));
+				}
+			}
+		}
+	}
+
 	// 特然変異
 	void Mutation(){
 		// とりあえず３体の子に突然変異を起こす。最初の2体はエリートとして残す

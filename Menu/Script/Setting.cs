@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 
 public class Setting : MonoBehaviour {
+  bool IsPlay;
   GameMaster Game;
   Player player1;
   Player player2;
@@ -9,6 +10,7 @@ public class Setting : MonoBehaviour {
   GA_2NE_ORIGIN ga_2ne_origin;
   ROOT7 Root7;
   void Start() {
+    IsPlay = false;
     ai_db = new AI_Database();
     Game = new GameMaster();
     player1 = new Player();
@@ -19,14 +21,20 @@ public class Setting : MonoBehaviour {
 
   // ボタンを押すとこの関数を実行する
   public void PushTestButton() {
-    TestPlay("TEST");
+    IsPlay = true;
+  }
+  void Update(){
+    if(IsPlay){
+      IsPlay = false;
+      IsPlay = TestPlay("TEST");
+    }
   }
 
-  // 数々のテストプレイ
-  void TestPlay(string _name) {
+  // 数々のテストプレイ：繰り返しPlayさせるならtrue，終了するならfalseを返す。
+  bool TestPlay(string _name) {
     switch (_name) {
       case "TEST":// とりあえず対戦させる
-                  // player1とplayer2にデータをセットする。SetData(セットするプレイヤ，ユニットの種類の配列，AIの配列);
+                  // player1とplayer2にデータをセットする。SetData(セットするプレイヤ，ユニットの種類の配列，AIのJsonの配列);
         player1.SetData(ai_db.GetUnits(ai_db.GetName(7)), ai_db.GetCodes(ai_db.GetName(7)));
         player2.SetData(ai_db.GetUnits(ai_db.GetName(10)), ai_db.GetCodes(ai_db.GetName(10)));
         //Game.Play(赤, 青)：1回処理するのに0.02秒程度かかる
@@ -34,21 +42,20 @@ public class Setting : MonoBehaviour {
           Debug.LogFormat("勝者：{0}  詳細(赤,青)：残機({1},{2})，キングHP({3}, {4})", Game.Play(player1, player2), Game.GetResult("RED_LEFT"), Game.GetResult("BLUE_LEFT"), Game.GetResult("RED_KING_HP"), Game.GetResult("BLUE_KING_HP"));
           Debug.LogFormat("勝者：{0}  詳細(赤,青)：残機({1},{2})，キングHP({3}, {4})", Game.Play(player2, player1), Game.GetResult("RED_LEFT"), Game.GetResult("BLUE_LEFT"), Game.GetResult("RED_KING_HP"), Game.GetResult("BLUE_KING_HP"));
         }
-        break;
-      case "GA_2NE_ORIGIN":// 2neが開発した遺伝的アルゴリズム ボタンを押してから数十秒処理するからご注意を！
-        ga_2ne_origin.Play(Game);
-        break;
+        return false;
+      case "GA_2NE_ORIGIN":// 2neが開発した遺伝的アルゴリズム：勝つまで処理を続ける
+        return ga_2ne_origin.Play(Game);
       case "ROOT7"://ROOT7のランダムアルゴリズム　処理時間多くて2分以内
-        Root7.Play(Game);      // ここに処理を書いてね
-        break;
+        Root7.Play(Game);
+        return false;
       case "":// 後の人はここにファイル名を入れてね
-
-        break;
+        return false;// ここに処理を書いてね
       default:
-        break;
+        return false;
     }
   }
 }
+
 // 時間計測
 // float start_time = Time.time;
 // float end_time = Time.time - start_time;
