@@ -1,6 +1,7 @@
 # Project パペッティア（略：プロパペ）<br>
 AI構築型対戦ゲーム「マリオネットAI」の構築AIを開発するプロジエクト<br>
 （マリオネットAIを知らない人はこちらで調べてください。https://fromalgorithm.jimdo.com）<br>
+最新の成果：http://www.nicovideo.jp/watch/sm31688135<br>
 
 ## 目標
 ＊マリオネットAIのAIを構築するAIを作ること  
