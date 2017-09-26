@@ -69,6 +69,16 @@ static class Constants{
     public const int F_DIE_COUNT_0              = 48;
     public const int F_DIE_COUNT_NOT_0          = 49;
 
+    public const int F_NOT_CHARGE               = 50; // 強化
+    public const int F_NOT_GUARD                = 51; // 強化
+    public const int F_CHARGE                   = 52; // 強化
+    public const int F_GUARD                    = 53; // 強化
+
+    public const int F_DOUBLE_MORE_ROOK         = 54;
+    public const int F_DOUBLE_MORE_KNIGHT       = 55;
+    public const int F_DOUBLE_MORE_PAWN         = 56;
+    public const int F_SINGLE_MORE_BISHOP       = 57;
+
     /*------------
     *範囲条件*
     ------------*/
@@ -88,9 +98,11 @@ static class Constants{
     public const int FI_STAMINA_2   = 21;
     public const int FI_STAMINA_1   = 22;
 
-    public const int FI_NON_CHERGE  = 25; // 未強化
+    public const int FI_NON_CHARGE  = 25; // 未強化
     public const int FI_NON_GUARD   = 26; // 未強化
     public const int FI_NON_SPEEDUP = 27; // 未強化
+    public const int FI_CHARGE      = 28; // 強化
+    public const int FI_GUARD       = 29; // 強化
 
     public const int FI_STAMINA_4   = 23;
     public const int FI_DIST_8_OVER      = 30; // 8マス以上

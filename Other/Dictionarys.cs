@@ -58,6 +58,15 @@ public class Dictionarys {
       {"キングHP\n敵=味方"    , Constants.F_KING_HP_EQUAL},
       {"死亡回数\n0"    , Constants.F_DIE_COUNT_0},
       {"死亡回数\n0以外"    , Constants.F_DIE_COUNT_NOT_0},
+      {"攻撃強化=0", Constants.F_NOT_CHARGE},
+      {"防御強化=0", Constants.F_NOT_GUARD},
+      {"攻撃強化≠0", Constants.F_CHARGE},
+      {"防御強化≠0", Constants.F_GUARD},
+      {"敵ルーク数≥2", Constants.F_DOUBLE_MORE_ROOK},
+      {"敵ナイト数≥2", Constants.F_DOUBLE_MORE_KNIGHT},
+      {"敵ポーン数≥2", Constants.F_DOUBLE_MORE_PAWN},
+      {"敵ビショップ数≥1", Constants.F_SINGLE_MORE_BISHOP},
+
   };
 
 
@@ -110,7 +119,7 @@ public class Dictionarys {
       {"スタミナ=3", Constants.FI_STAMINA_3},
       {"スタミナ=2", Constants.FI_STAMINA_2},
       {"スタミナ=1", Constants.FI_STAMINA_1},
-      {"攻撃強化=0", Constants.FI_NON_CHERGE},
+      {"攻撃強化=0", Constants.FI_NON_CHARGE},
       {"防御強化=0", Constants.FI_NON_GUARD},
       {"速度強化=0", Constants.FI_NON_SPEEDUP},
       // 追加
@@ -131,6 +140,8 @@ public class Dictionarys {
       {"死亡回数=0", Constants.FI_DIE_COUNT_0},  
       {"死亡回数≠0", Constants.FI_DIE_COUNT_NOT_0},
 
+      {"攻撃強化≠0", Constants.FI_CHARGE},
+      {"防御強化≠0", Constants.FI_GUARD},
 
     };
 

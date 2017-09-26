@@ -159,7 +159,7 @@ public class GameMaster{
 			case "KING":
 			return 0;
 			case "QUEEN":
-			return 10;
+			return -15;
 			case "KNIGHT":
 			return -20;
 			case "BISHOP":
@@ -1665,8 +1665,8 @@ public class Unit_Cal{
 			tmp_units.Add(GetNearUnit(this.team, _units, this, _action));
 			tmp_units.Add(GetNearUnit(this.enemy_team, _units, this, _action));
 			break;
-			case Constants.FI_NON_CHERGE:
-			tmp_units = GetNonPowerUp(Constants.FI_NON_CHERGE, _units);
+			case Constants.FI_NON_CHARGE:
+			tmp_units = GetNonPowerUp(Constants.FI_NON_CHARGE, _units);
 			break;
 			case Constants.FI_NON_SPEEDUP:
 			tmp_units = GetNonPowerUp(Constants.FI_NON_SPEEDUP, _units);
@@ -1826,7 +1826,7 @@ public class Unit_Cal{
 				continue;
 			}
 			switch(_const_num){
-				case Constants.FI_NON_CHERGE:
+				case Constants.FI_NON_CHARGE:
 				if(_unit.charge == 0){
 					tmp_units.Add(_unit);
 				}
