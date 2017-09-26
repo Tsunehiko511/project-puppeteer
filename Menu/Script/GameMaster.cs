@@ -724,7 +724,7 @@ public class Unit_Cal{
 	int[,] healRange;					// 攻撃範囲
 	int[,] supportRange;					// 攻撃範囲
 
-	bool[] plan_eventFlags = new bool[50];
+	bool[] plan_eventFlags = new bool[60];
 
 	int plan_eventFlag;
 	int connectStartId = -1;
@@ -991,6 +991,8 @@ public class Unit_Cal{
 		SetPointEvent();
 		SetUnitCount();
 		DieCountEvent();
+		SetPowerUPEvent();
+		SetUnitTypeCount();
 
 		// 状態遷移
 		DoTransition(this.plans);
@@ -1230,11 +1232,73 @@ public class Unit_Cal{
 
 	void DieCountEvent(){
 		int[] tmp_die_count = GameMaster.Die_Count;
-		if(tmp_die_count[this._id] == 0){
+		int tmp_id = this._id;
+		if(this.team == "Enemy"){
+			tmp_id +4;
+		}
+		if(tmp_die_count[tmp_id] == 0){
 			plan_eventFlags[Constants.F_DIE_COUNT_0] = true;
 		}
 		else{
 			plan_eventFlags[Constants.F_DIE_COUNT_NOT_0] = true;
+		}
+	}
+	void SetPowerUPEvent(){
+		// 自身が強化しているかどうか
+		if(this.charge > 0){
+			plan_eventFlags[Constants.F_CHARGE] = true;
+		}else{
+			plan_eventFlags[Constants.F_NOT_CHARGE] = true;
+		}
+		if(this.guard > 0){
+			plan_eventFlags[Constants.F_GUARD] = true;
+		}else{
+			plan_eventFlags[Constants.F_NOT_GUARD] = true;
+		}
+	}
+	void SetUnitTypeCount(){
+		int count_queen = 0;
+		int count_knight = 0;
+		int count_bishop = 0;
+		int count_pawn = 0;
+		int count_rook = 0;
+
+		for(int i=0; i<player1.Units.Length; i++){
+			int tmp_id = dic.Chara_Dic[player2.Units[i]][0];
+			if(this.team == "Enemy"){
+				tmp_id = dic.Chara_Dic[player1.Units[i]][0];
+			}
+			switch(tmp_id){
+				case 0:
+				break;
+				case 1:
+				count_queen++;
+				break;
+				case 2:
+				count_knight++;
+				break;
+				case 3:
+				count_bishop++;
+				break;
+				case 4:
+				count_pawn++;
+				break;
+				case 5:
+				count_rook++;
+				break;
+			}
+		}
+		if(count_bishop > 0){
+			plan_eventFlags[Constants.F_SINGLE_MORE_BISHOP] = true;
+		}
+		if(count_knight > 1){
+			plan_eventFlags[Constants.F_DOUBLE_MORE_KNIGHT] = true;
+		}
+		if(count_pawn > 1){
+			plan_eventFlags[Constants.F_DOUBLE_MORE_PAWN] = true;
+		}
+		if(count_rook > 1){
+			plan_eventFlags[Constants.F_DOUBLE_MORE_ROOK] = true;
 		}
 	}
 
@@ -1666,13 +1730,19 @@ public class Unit_Cal{
 			tmp_units.Add(GetNearUnit(this.enemy_team, _units, this, _action));
 			break;
 			case Constants.FI_NON_CHARGE:
-			tmp_units = GetNonPowerUp(Constants.FI_NON_CHARGE, _units);
+			tmp_units = GetPowerUp(Constants.FI_NON_CHARGE, _units);
 			break;
 			case Constants.FI_NON_SPEEDUP:
-			tmp_units = GetNonPowerUp(Constants.FI_NON_SPEEDUP, _units);
+			tmp_units = GetPowerUp(Constants.FI_NON_SPEEDUP, _units);
 			break;
 			case Constants.FI_NON_GUARD:
-			tmp_units = GetNonPowerUp(Constants.FI_NON_GUARD, _units);
+			tmp_units = GetPowerUp(Constants.FI_NON_GUARD, _units);
+			break;
+			case Constants.FI_CHARGE:
+			tmp_units = GetPowerUp(Constants.FI_CHARGE, _units);
+			break;
+			case Constants.FI_GUARD:
+			tmp_units = GetPowerUp(Constants.FI_GUARD, _units);
 			break;
 
 			case Constants.FI_NOT_KING:
@@ -1838,6 +1908,16 @@ public class Unit_Cal{
 				break;
 				case Constants.FI_NON_GUARD:
 				if(_unit.guard == 0){
+					tmp_units.Add(_unit);
+				}
+				break;
+				case Constants.FI_CHARGE:
+				if(_unit.charge > 0){
+					tmp_units.Add(_unit);
+				}
+				break;
+				case Constants.FI_GUARD:
+				if(_unit.guard > 0){
 					tmp_units.Add(_unit);
 				}
 				break;
@@ -2414,6 +2494,9 @@ public class Unit_Cal{
 	}
 	public void StaminaDown(){
 		if(this.type == "KING"){
+			return;
+		}
+		if(this.type == "QUEEN" && this.action == Constants.A_ATTACK){
 			return;
 		}
 		this.stamina--;
